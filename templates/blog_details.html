@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ blog.title }}{% endblock %}
+
+{% block content %}
+
+<style>
+
+.hero{
+    width:100%;
+    height:450px;
+    border-radius:20px;
+    overflow:hidden;
+    margin-bottom:30px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+.hero img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.content{
+    max-width:900px;
+    margin:auto;
+    padding:20px;
+}
+
+.content h1{
+    font-size:42px;
+    margin-bottom:15px;
+}
+
+.blog-info{
+    color:#94a3b8;
+    margin-bottom:25px;
+    font-size:14px;
+}
+
+.blog-text{
+    color:#cbd5e1;
+    font-size:18px;
+    line-height:1.9;
+}
+
+.back-btn{
+    display:inline-block;
+    margin-top:40px;
+    padding:12px 22px;
+    background:#2563eb;
+    color:white;
+    text-decoration:none;
+    border-radius:10px;
+    transition:0.3s;
+}
+
+.back-btn:hover{
+    background:#1d4ed8;
+    transform:translateY(-2px);
+}
+
+@media(max-width:768px){
+
+    .hero{
+        height:280px;
+    }
+
+    .content h1{
+        font-size:30px;
+    }
+
+    .blog-text{
+        font-size:16px;
+    }
+
+}
+
+</style>
+
+<div class="content">
+
+    <!-- HERO IMAGE -->
+    <div class="hero">
+        <img src="{{ blog.image.url }}" alt="{{ blog.title }}">
+    </div>
+
+    <!-- TITLE -->
+    <h1>{{ blog.title }}</h1>
+
+    <!-- INFO -->
+    <div class="blog-info">
+        By {{ blog.author }} • {{ blog.created_at }}
+    </div>
+
+    <!-- CONTENT -->
+    <div class="blog-text">
+        {{ blog.content|linebreaks }}
+    </div>
+
+    <!-- BACK BUTTON -->
+    <a href="{% url 'blog' %}" class="back-btn">
+        Back To Blogs
+    </a>
+
+</div>
+
+{% endblock %}

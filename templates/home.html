@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<style>
+
+.hero{
+    text-align:center;
+    padding:80px 20px;
+}
+
+.card{
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.08);
+    padding:50px;
+    border-radius:20px;
+    max-width:600px;
+    margin:auto;
+    backdrop-filter:blur(12px);
+    box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+.card h1{
+    font-size:42px;
+    margin-bottom:15px;
+}
+
+.card p{
+    color:#cbd5e1;
+    font-size:18px;
+    margin-bottom:25px;
+}
+
+.btn{
+    display:inline-block;
+    padding:12px 25px;
+    background:#2563eb;
+    color:white;
+    text-decoration:none;
+    border-radius:10px;
+    transition:0.3s;
+}
+
+.btn:hover{
+    background:#1d4ed8;
+    transform:translateY(-2px);
+}
+
+@media(max-width:600px){
+    .card h1{ font-size:30px; }
+}
+
+</style>
+
+<div class="hero">
+
+    <div class="card">
+
+        {% if request.user.is_authenticated %}
+
+            <h1>Welcome {{ request.user.username }}</h1>
+            <p>You are logged into your Django authentication system.</p>
+
+            <a class="btn" href="{% url 'logout' %}">Logout</a>
+
+        {% else %}
+
+            <h1>Authentication System</h1>
+            <p>Login or create an account to continue.</p>
+
+            <a class="btn" href="{% url 'login' %}">Login</a>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}
