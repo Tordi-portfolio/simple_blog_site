@@ -6,14 +6,14 @@
 
 <style>
 
-.auth-container{
+.auth-wrapper{
     display:flex;
     justify-content:center;
     align-items:center;
-    min-height:70vh;
+    min-height:80vh;
 }
 
-.form-box{
+.auth-box{
     width:100%;
     max-width:420px;
     background:rgba(255,255,255,0.05);
@@ -24,14 +24,15 @@
     box-shadow:0 10px 30px rgba(0,0,0,0.5);
 }
 
-.form-box h2{
+.auth-box h2{
     text-align:center;
     margin-bottom:25px;
     font-size:32px;
+    color:white;
 }
 
 .input-group{
-    margin-bottom:18px;
+    margin-bottom:20px;
 }
 
 .input-group input{
@@ -42,18 +43,54 @@
     outline:none;
     background:rgba(255,255,255,0.08);
     color:white;
+    font-size:15px;
 }
 
 .input-group input::placeholder{
     color:#cbd5e1;
 }
 
+/* PASSWORD BOX */
+
+.password-box{
+    position:relative;
+}
+
+.password-box input{
+    padding-right:50px;
+}
+
+/* EYE ICON */
+
+.toggle-password{
+    position:absolute;
+    right:15px;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+    color:#94a3b8;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.toggle-password:hover{
+    color:white;
+}
+
+.toggle-password svg{
+    width:22px;
+    height:22px;
+}
+
+/* BUTTON */
+
 button{
     width:100%;
     padding:14px;
     border:none;
     border-radius:10px;
-    background:#2563eb;
+    background:#3b82f6;
     color:white;
     font-size:16px;
     cursor:pointer;
@@ -61,19 +98,15 @@ button{
 }
 
 button:hover{
-    background:#1d4ed8;
+    background:#2563eb;
     transform:translateY(-2px);
 }
 
-.message{
-    text-align:center;
-    margin-top:15px;
-    color:#facc15;
-}
+/* LINKS */
 
 .links{
     text-align:center;
-    margin-top:15px;
+    margin-top:18px;
     color:#cbd5e1;
 }
 
@@ -86,39 +119,128 @@ button:hover{
     text-decoration:underline;
 }
 
+/* MESSAGE */
+
+.message{
+    text-align:center;
+    margin-top:12px;
+    color:#facc15;
+}
+
+/* MOBILE */
+
+@media(max-width:500px){
+
+    .auth-box{
+        padding:30px 20px;
+    }
+
+}
+
 </style>
 
-<div class="auth-container">
+<div class="auth-wrapper">
 
-    <div class="form-box">
+    <div class="auth-box">
 
         <h2>Login</h2>
 
         <form method="POST">
+
             {% csrf_token %}
 
             <div class="input-group">
-                <input type="text" name="username" placeholder="Username" required>
+
+                <input 
+                    type="text" 
+                    name="username" 
+                    placeholder="Username"
+                    required
+                >
+
             </div>
 
-            <div class="input-group">
-                <input type="password" name="password" placeholder="Password" required>
+            <div class="input-group password-box">
+
+                <input 
+                    type="password" 
+                    name="password" 
+                    placeholder="Password"
+                    id="password"
+                    required
+                >
+
+                <span class="toggle-password" onclick="togglePassword()">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                        d="M2.458 12C3.732 7.943 7.523 5 12 5
+                        c4.478 0 8.268 2.943 9.542 7
+                        -1.274 4.057-5.064 7-9.542 7
+                        -4.477 0-8.268-2.943-9.542-7z"/>
+
+                    </svg>
+
+                </span>
+
             </div>
 
-            <button type="submit">Login</button>
+            <button type="submit">
+
+                Login
+
+            </button>
+
         </form>
 
-        {% for message in messages %}
-            <div class="message">{{ message }}</div>
-        {% endfor %}
+        <div class="links">
+
+            <a href="{% url 'reset_password' %}">
+                Forgot Password?
+            </a>
+
+        </div>
 
         <div class="links">
+
             Don't have an account?
-            <a href="{% url 'register' %}">Register</a>
+
+            <a href="{% url 'register' %}">
+
+                Register
+
+            </a>
+
         </div>
 
     </div>
 
 </div>
+
+<script>
+
+function togglePassword(){
+
+    const passwordInput = document.getElementById("password");
+
+    if(passwordInput.type === "password"){
+
+        passwordInput.type = "text";
+
+    }
+
+    else{
+
+        passwordInput.type = "password";
+
+    }
+
+}
+
+</script>
 
 {% endblock %}
